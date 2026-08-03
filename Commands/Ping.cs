@@ -3,7 +3,7 @@ using Discord.Interactions;
 
 namespace Commands;
 
-public class KillCommand : InteractionModuleBase<SocketInteractionContext>
+public class PingCommand : InteractionModuleBase<SocketInteractionContext>
 {
     [SlashCommand("ping", "pong")]
     public async Task Ping()
