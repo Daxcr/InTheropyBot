@@ -10,16 +10,22 @@ public class UploadDiscCommand : InteractionModuleBase<SocketInteractionContext>
     {
         await DeferAsync();
 
-        string extension = Path.GetExtension(Upload.Filename).ToLowerInvariant();
-        if (extension != ".wav" && extension != ".mp3")
+        try
         {
-            await FollowupAsync("Only `.wav` and `.mp3` are supported.");
-            return;
-        }
-        if (Upload.Size > 1024 * 1024 * 25)
+            string extension = Path.GetExtension(Upload.Filename).ToLowerInvariant();
+            if (extension != ".wav" && extension != ".mp3")
+            {
+                await FollowupAsync("Only `.wav` and `.mp3` are supported.");
+                return;
+            }
+            if (Upload.Size > 1024 * 1024 * 25)
+            {
+                await FollowupAsync("File size must be under 25MB.");
+                return;
+            }
+        } catch (Exception ex)
         {
-            await FollowupAsync("File size must be under 25MB.");
-            return;
+            await FollowupAsync(ex.ToString());
         }
     }
 }
