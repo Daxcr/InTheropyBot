@@ -6,12 +6,19 @@ namespace Commands;
 public class UploadDiscCommand : InteractionModuleBase<SocketInteractionContext>
 {
     [SlashCommand("upload-disc", "Upload a custom music disc for review")]
-    public async Task Upload(
-        [Summary("songName", "Song Name")]
-        string SongName,
-        [Summary("upload", "File")]
-        IAttachment Upload)
+    public async Task Upload(string SongName, IAttachment Upload)
     {
-        await RespondAsync("debug");
+        await DeferAsync();
+
+        if (!Upload.Filename.EndsWith(".wav") && !Upload.Filename.EndsWith(".mp3"))
+        {
+            await FollowupAsync("Only `.wav` and `.mp3` are supported.");
+            return;
+        }
+        if (Upload.Size > 1024 * 1024 * 25)
+        {
+            await FollowupAsync("File size must be under 25MB.");
+            return;
+        }
     }
 }

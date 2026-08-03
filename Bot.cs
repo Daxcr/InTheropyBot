@@ -7,6 +7,7 @@ public class Bot
 {
     private DiscordSocketClient? client;
     public static InteractionService? interactions;
+    public static uint Admin = uint.Parse(File.ReadAllText("admin.txt"));
 
     public async Task Run()
     {
