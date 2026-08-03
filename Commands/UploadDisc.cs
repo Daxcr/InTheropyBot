@@ -10,7 +10,8 @@ public class UploadDiscCommand : InteractionModuleBase<SocketInteractionContext>
     {
         await DeferAsync();
 
-        if (!Upload.Filename.EndsWith(".wav") && !Upload.Filename.EndsWith(".mp3"))
+        string extension = Path.GetExtension(Upload.Filename).ToLowerInvariant();
+        if (extension != ".wav" && extension != ".mp3")
         {
             await FollowupAsync("Only `.wav` and `.mp3` are supported.");
             return;

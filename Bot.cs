@@ -11,7 +11,10 @@ public class Bot
 
     public async Task Run()
     {
-        client = new DiscordSocketClient();
+        client = new DiscordSocketClient(new DiscordSocketConfig()
+        {
+            GatewayIntents = GatewayIntents.All
+        });
 
         interactions = new InteractionService(client);
 
